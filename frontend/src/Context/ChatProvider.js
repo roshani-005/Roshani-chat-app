@@ -3,6 +3,9 @@ import { useHistory } from "react-router-dom";
 
 const ChatContext = createContext();
 
+// 🔗 Backend API URL
+export const BASE_URL = "https://roshani-chat-app-1.onrender.com";
+
 const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [user, setUser] = useState();
@@ -30,6 +33,7 @@ const ChatProvider = ({ children }) => {
         setNotification,
         chats,
         setChats,
+        BASE_URL, // 👈 you can now use this anywhere
       }}
     >
       {children}
