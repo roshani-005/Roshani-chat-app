@@ -62,6 +62,7 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
   socket.on("setup", (userData) => {
+    socket.userId = userData && userData._id;
     socket.join(userData._id);
     socket.emit("connected");
   });
@@ -85,8 +86,10 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.off("setup", () => {
+  socket.on("disconnect", () => {
     console.log("USER DISCONNECTED");
-    socket.leave(userData._id);
+    if (socket.userId) {
+      socket.leave(socket.userId);
+    }
   });
 });
